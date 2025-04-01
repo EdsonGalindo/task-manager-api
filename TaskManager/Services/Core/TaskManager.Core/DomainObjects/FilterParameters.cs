@@ -5,24 +5,44 @@
         public FilterParameters(PaginationSettings paginationSettings)
         {
             MaxPageSize = paginationSettings.MaxPageSize;
-            DefaultPageSize = paginationSettings.DefaultPageSize;
-            DefaultPageNumber = paginationSettings.DefaultPageNumber;
+            PageNumber = paginationSettings.DefaultPageNumber;
+            _pageSize = paginationSettings.DefaultPageSize;
         }
 
         /// <summary>
         /// The maximum page size allowed.
         /// </summary>
-        public int MaxPageSize { get; set; } = 20;
-
-        /// <summary>
-        /// The default page size.
-        /// </summary>
-        public int DefaultPageSize { get; set; } = 10;
+        private int MaxPageSize { get; set; }
 
         /// <summary>
         /// The default page number.
         /// </summary>
-        public int DefaultPageNumber { get; set; } = 1;
+        public int PageNumber { get; set; }
+
+        /// <summary>
+        /// The default page size or the value set by the request 
+        /// if it is less or equal the maximum page size
+        /// </summary>
+        private int _pageSize { get; set; }
+
+        /// <summary>
+        /// The request page size.
+        /// </summary>
+        public int PageSize
+        {
+            get
+            {
+                return _pageSize;
+            }
+            set
+            {
+                if (value == 0)
+                {
+                    return;
+                }
+                _pageSize = value > MaxPageSize ? MaxPageSize : value;
+            }
+        }
 
     }
 }
