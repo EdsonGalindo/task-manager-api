@@ -1,7 +1,7 @@
 ﻿using TaskManager.Core.DomainObjects;
 using static TaskManager.Core.Shared.Task.Domain.TaskStatus;
 
-namespace TaskManager.Task.Domain
+namespace TaskManager.Tasks.Domain
 {
     /// <summary>
     /// Represents a task entity

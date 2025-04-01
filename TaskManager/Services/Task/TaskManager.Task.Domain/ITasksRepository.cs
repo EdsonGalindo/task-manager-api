@@ -1,11 +1,11 @@
 ﻿using TaskManager.Core.Shared.Task.Filter;
 
-namespace TaskManager.Task.Domain
+namespace TaskManager.Tasks.Domain
 {
     /// <summary>
     /// The interface for access to the Tasks repository
     /// </summary>
-    public interface ITaskRepository
+    public interface ITasksRepository
     {
         /// <summary>
         /// Get all tasks
