@@ -6,9 +6,9 @@ namespace TaskManager.Task.Domain
     /// <summary>
     /// Represents a task entity
     /// </summary>
-    public class Task : Entity
+    public class TaskItem : Entity
     {
-        public Task(
+        public TaskItem(
             string title,
             string? description,
             DateTime? dueDate,
@@ -20,7 +20,7 @@ namespace TaskManager.Task.Domain
             Status = status;
         }
 
-        public Task() { }
+        public TaskItem() { }
 
         public string Title { get; set; } = string.Empty;
         public string? Description { get; set; }
