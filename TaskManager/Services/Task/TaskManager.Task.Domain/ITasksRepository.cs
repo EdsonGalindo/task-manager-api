@@ -19,7 +19,7 @@ namespace TaskManager.Tasks.Domain
         /// </summary>
         /// <param name="id">A task Id</param>
         /// <returns>Returns a task</returns>
-        Task<IEnumerable<TaskItem>> GetByIdAsync(int id);
+        Task<TaskItem?> GetByIdAsync(int id);
 
         /// <summary>
         /// Check if a task exists by its Id
