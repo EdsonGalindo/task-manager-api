@@ -8,7 +8,21 @@ namespace TaskManager.Task.Domain
     /// </summary>
     public class Task : Entity
     {
-        public string Title { get; set; }
+        public Task(
+            string title,
+            string? description,
+            DateTime? dueDate,
+            StatusEnum status)
+        {
+            Title = title;
+            Description = description;
+            DueDate = dueDate;
+            Status = status;
+        }
+
+        public Task() { }
+
+        public string Title { get; set; } = string.Empty;
         public string? Description { get; set; }
         public DateTime? DueDate { get; set; }
         public StatusEnum Status { get; set; } = StatusEnum.Pending;

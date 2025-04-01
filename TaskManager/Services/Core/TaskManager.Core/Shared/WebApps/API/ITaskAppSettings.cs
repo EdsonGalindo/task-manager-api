@@ -4,6 +4,6 @@ namespace TaskManager.Core.Shared.WebApps.API
 {
     public interface ITaskAppSettings
     {
-        PaginationSettings Pagination { get; set; }
+        PaginationSettings? Pagination { get; set; }
     }
 }
