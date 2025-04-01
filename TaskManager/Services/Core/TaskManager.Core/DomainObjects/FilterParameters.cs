@@ -9,6 +9,14 @@
             _pageSize = paginationSettings.DefaultPageSize;
         }
 
+        protected FilterParameters()
+        {
+            var paginationSettings = new PaginationSettings();
+            MaxPageSize = paginationSettings.MaxPageSize;
+            PageNumber = paginationSettings.DefaultPageNumber;
+            _pageSize = paginationSettings.DefaultPageSize;
+        }
+
         /// <summary>
         /// The maximum page size allowed.
         /// </summary>

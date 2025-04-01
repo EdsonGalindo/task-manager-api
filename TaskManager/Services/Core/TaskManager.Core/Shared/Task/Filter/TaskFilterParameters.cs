@@ -12,6 +12,8 @@ namespace TaskManager.Core.Shared.Task.Filter
         public TaskFilterParameters(TaskAppSettings taskAppSettings)
             : base(taskAppSettings.Pagination) { }
 
+        public TaskFilterParameters() { }
+
         /// <summary>
         /// Filter tasks by Title
         /// </summary>
