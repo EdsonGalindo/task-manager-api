@@ -24,9 +24,13 @@ namespace TaskManager.Tasks.Data.Repository
         /// <inheritdoc />
         public async Task<bool> DeleteAsync(int id)
         {
-            await _taskContext.Tasks
-                .Where(t => t.Id == id)
-                .ExecuteDeleteAsync();
+            var task = await _taskContext.Tasks.FindAsync(id);
+            if (task == null)
+            {
+                return false;
+            }
+
+            _taskContext.Tasks.Remove(task);
 
             return await SaveChangesAsync();
         }

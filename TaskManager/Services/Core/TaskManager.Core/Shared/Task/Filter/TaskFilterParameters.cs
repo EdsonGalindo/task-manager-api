@@ -9,7 +9,7 @@ namespace TaskManager.Core.Shared.Task.Filter
     /// </summary>
     public class TaskFilterParameters : FilterParameters
     {
-        public TaskFilterParameters(TaskAppSettings taskAppSettings)
+        public TaskFilterParameters(ITaskAppSettings taskAppSettings)
             : base(taskAppSettings.Pagination) { }
 
         public TaskFilterParameters() { }
