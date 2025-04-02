@@ -5,6 +5,7 @@ namespace TaskManager.Tasks.Application.ViewModels
 {
     public class TaskItemViewModel
     {
+
         [Key]
         public int Id { get; set; }
 
@@ -15,9 +16,11 @@ namespace TaskManager.Tasks.Application.ViewModels
         [StringLength(500, ErrorMessage = "O campo Descrição deve ter no máximo {1} caracteres")]
         public string? Description { get; set; }
 
+        [DataType(DataType.DateTime, ErrorMessage = "Data inválida. Use o formato yyyy-mm-dd")]
         public DateTime? DueDate { get; set; }
 
         [Range(1, 3, ErrorMessage = "O Status deve ser um número entre {1} e {2}")]
+        [Required(ErrorMessage = "Status inválido")]
         public StatusEnum? Status { get; set; } = StatusEnum.Pending;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TaskManager.Core.Shared.Task.Constants;
 using TaskManager.Core.Shared.Task.Filter;
 using TaskManager.Tasks.Domain;
 
@@ -27,7 +28,7 @@ namespace TaskManager.Tasks.Data.Repository
             var task = await _taskContext.Tasks.FindAsync(id);
             if (task == null)
             {
-                return false;
+                throw new Exception(TasksConstants.TaskItemNotFound);
             }
 
             _taskContext.Tasks.Remove(task);

@@ -142,6 +142,11 @@ namespace TaskManager.WebApp.API.Controllers.V1
         {
             try
             {
+                if (ModelState.IsValid == false)
+                {
+                    return CustomResponse(ModelState);
+                }
+
                 var response = await _tasksAppService.GetAllTasksAsync(GetParametrizedFilter(taskFilter));
                 return CustomResponse(response);
             }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Threading.Tasks;
 using TaskManager.Core.Shared.Task.Constants;
 using TaskManager.Core.Shared.Task.Filter;
 using TaskManager.Tasks.Application.ViewModels;
@@ -41,21 +42,26 @@ namespace TaskManager.Tasks.Application.Services
         /// <inheritdoc/>
         public async Task<TaskItemViewModel?> GetTaskByIdAsync(int id)
         {
+            ValidateTaskId(id);
             return _mapper.Map<TaskItemViewModel?>(await _tasksRepository.GetByIdAsync(id));
         }
 
         /// <inheritdoc/>
         public async Task<bool> GetTaskExistsByIdAsync(int id)
         {
+            ValidateTaskId(id);
             return await _tasksRepository.ExistsByIdAsync(id);
         }
 
         /// <inheritdoc/>
         public async Task<bool> SetTaskAsCompletedAsync(int id)
         {
+            ValidateTaskId(id);
+
             var taskItem = await _tasksRepository.GetByIdAsync(id) ?? 
                                  throw new Exception(TasksConstants.TaskItemNotFound);
-            
+            ValidateTaskExists(taskItem);
+
             taskItem.MarkAsCompleted();
 
             return await _tasksRepository.UpdateAsync(taskItem);
@@ -64,8 +70,11 @@ namespace TaskManager.Tasks.Application.Services
         /// <inheritdoc/>
         public async Task<bool> SetTaskAsInProgressAsync(int id)
         {
+            ValidateTaskId(id);
+
             var taskItem = await _tasksRepository.GetByIdAsync(id) ??
                                  throw new Exception(TasksConstants.TaskItemNotFound);
+            ValidateTaskExists(taskItem);
 
             taskItem.MarkAsInProgress();
 
@@ -75,8 +84,11 @@ namespace TaskManager.Tasks.Application.Services
         /// <inheritdoc/>
         public async Task<bool> SetTaskAsPendingAsync(int id)
         {
+            ValidateTaskId(id);
+
             var taskItem = await _tasksRepository.GetByIdAsync(id) ??
                                  throw new Exception(TasksConstants.TaskItemNotFound);
+            ValidateTaskExists(taskItem);
 
             taskItem.MarkAsPending();
 
@@ -86,12 +98,25 @@ namespace TaskManager.Tasks.Application.Services
         /// <inheritdoc/>
         public async Task<bool> UpdateTaskAsync(TaskItemViewModel task)
         {
-            if (task.Id == 0)
+            ValidateTaskId(task.Id);
+
+            return await _tasksRepository.UpdateAsync(_mapper.Map<TaskItem>(task));
+        }
+
+        private static void ValidateTaskId(int id)
+        {
+            if (id == 0)
             {
                 throw new Exception(TasksConstants.TaskItemInvalid);
             }
+        }
 
-            return await _tasksRepository.UpdateAsync(_mapper.Map<TaskItem>(task));
+        private static void ValidateTaskExists(TaskItem taskItem)
+        {
+            if (taskItem == null)
+            {
+                throw new Exception(TasksConstants.TaskItemNotFound);
+            }
         }
     }
 }
