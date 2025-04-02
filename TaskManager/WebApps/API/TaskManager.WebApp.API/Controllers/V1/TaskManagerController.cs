@@ -1,6 +1,8 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Swashbuckle.AspNetCore.Annotations;
+using TaskManager.Core.Shared.Task.Constants;
 using TaskManager.Core.Shared.Task.Filter;
 using TaskManager.Core.Shared.WebApps.API;
 using TaskManager.Tasks.Application.Services;
@@ -23,9 +25,21 @@ namespace TaskManager.WebApp.API.Controllers.V1
             Summary = "Adicionar uma nova Tarefa",
             Description = "Adicionar uma nova Tarefa ao sistema"
         )]
-        public async Task<int> AddTaskAsync(TaskItemViewModel task)
+        public async Task<ActionResult<int>> AddTaskAsync(TaskItemViewModel task)
         {
-            return await _tasksAppService.AddTaskAsync(task);
+            try
+            {
+                if (ModelState.IsValid == false)
+                {
+                    return CustomResponse(ModelState);
+                }
+
+                return CustomResponse(await _tasksAppService.AddTaskAsync(task));
+            }
+            catch (Exception ex)
+            {
+                return CustomResponse(ex);
+            }
         }
         
         [HttpPut("tasks")]
@@ -33,9 +47,21 @@ namespace TaskManager.WebApp.API.Controllers.V1
             Summary = "Atualizar uma Tarefa",
             Description = "Atualizar uma Tarefa existente no sistema"
         )]
-        public async Task<bool> UpdateTaskAsync(TaskItemViewModel task)
+        public async Task<ActionResult<bool>> UpdateTaskAsync(TaskItemViewModel task)
         {
-            return await _tasksAppService.UpdateTaskAsync(task);
+            try
+            {
+                if (ModelState.IsValid == false)
+                {
+                    return CustomResponse(ModelState);
+                }
+
+                return CustomResponse(await _tasksAppService.UpdateTaskAsync(task));
+            }
+            catch (Exception ex)
+            {
+                return CustomResponse(ex);
+            }
         }
         
         [HttpDelete("tasks/{id:int}")]
@@ -43,39 +69,67 @@ namespace TaskManager.WebApp.API.Controllers.V1
             Summary = "Excluir uma Tarefa",
             Description = "Excluir uma Tarefa existente no sistema"
         )]
-        public async Task<bool> DeleteTaskAsync(int id)
+        public async Task<ActionResult<bool>> DeleteTaskAsync(int id)
         {
-            return await _tasksAppService.DeleteTaskAsync(id);
+            try
+            {
+                return CustomResponse(await _tasksAppService.DeleteTaskAsync(id));
+            }
+            catch (Exception ex)
+            {
+                return CustomResponse(ex);
+            }
         }
         
-        [HttpPut("tasks/{id:int}/status/pending")]
+        [HttpPut("tasks/{id:int}/set-pending")]
         [SwaggerOperation(
             Summary = "Definir o Status de uma Tarefa como \"Pendente\"",
             Description = "Definir o Status de uma Tarefa existente no sistema como \"Pendente\""
         )]
-        public async Task<bool> SetTaskAsPendingAsync(int id)
+        public async Task<ActionResult<bool>> SetTaskAsPendingAsync(int id)
         {
-            return await _tasksAppService.SetTaskAsPendingAsync(id);
+            try
+            {
+                return CustomResponse(await _tasksAppService.SetTaskAsPendingAsync(id));
+            }
+            catch(Exception ex)
+            {
+                return CustomResponse(ex);
+            }
         }
         
-        [HttpPut("tasks/{id:int}/status/inprogress")]
+        [HttpPut("tasks/{id:int}/start")]
         [SwaggerOperation(
             Summary = "Definir o Status de uma Tarefa como \"Em Progresso\"",
             Description = "Definir o Status de uma Tarefa existente no sistema como \"Em Progresso\""
         )]
-        public async Task<bool> SetTaskAsInProgressAsync(int id)
+        public async Task<ActionResult<bool>> SetTaskAsInProgressAsync(int id)
         {
-            return await _tasksAppService.SetTaskAsInProgressAsync(id);
+            try
+            {
+                return CustomResponse(await _tasksAppService.SetTaskAsInProgressAsync(id));
+            }
+            catch (Exception ex)
+            {
+                return CustomResponse(ex);
+            }
         }
         
-        [HttpPut("tasks/{id:int}/status/completed")]
+        [HttpPut("tasks/{id:int}/complete")]
         [SwaggerOperation(
             Summary = "Definir o Status de uma Tarefa como \"Concluída\"",
             Description = "Definir o Status de uma Tarefa existente no sistema como \"Concluída\""
         )]
-        public async Task<bool> SetTaskAsCompletedAsync(int id)
+        public async Task<ActionResult<bool>> SetTaskAsCompletedAsync(int id)
         {
-            return await _tasksAppService.SetTaskAsCompletedAsync(id);
+            try
+            {
+                return CustomResponse(await _tasksAppService.SetTaskAsCompletedAsync(id));
+            }
+            catch (Exception ex)
+            {
+                return CustomResponse(ex);
+            }
         }
 
         [HttpGet("tasks")]
@@ -83,10 +137,18 @@ namespace TaskManager.WebApp.API.Controllers.V1
             Summary = "Obter todas tarefas",
             Description = "Obter todas as Tarefas com filtro por título (opcional) e paginação dos resultados"
         )]
-        public async Task<IEnumerable<TaskItemViewModel>> GetAllTasksAsync(
+        public async Task<ActionResult<IEnumerable<TaskItemViewModel>>> GetAllTasksAsync(
             [FromQuery] TaskFilterParameters taskFilter)
         {
-            return await _tasksAppService.GetAllTasksAsync(GetParametrizedFilter(taskFilter));
+            try
+            {
+                var response = await _tasksAppService.GetAllTasksAsync(GetParametrizedFilter(taskFilter));
+                return CustomResponse(response);
+            }
+            catch (Exception ex)
+            {
+                return CustomResponse(ex);
+            }
         }
 
         [HttpGet("tasks/{id:int}")]
@@ -94,9 +156,16 @@ namespace TaskManager.WebApp.API.Controllers.V1
             Summary = "Obter uma tarefa",
             Description = "Obter uma Tarefa através de seu número de identificação"
         )]
-        public async Task<TaskItemViewModel?> GetTaskByIdAsync(int id)
+        public async Task<ActionResult<TaskItemViewModel>> GetTaskByIdAsync(int id)
         {
-            return await _tasksAppService.GetTaskByIdAsync(id);
+            try
+            {
+                return CustomResponse(await _tasksAppService.GetTaskByIdAsync(id));
+            }
+            catch (Exception ex)
+            {
+                return CustomResponse(ex);
+            }
         }
 
         [HttpGet("tasks/{id:int}/exists")]
@@ -104,9 +173,16 @@ namespace TaskManager.WebApp.API.Controllers.V1
             Summary = "Obter informação se uma tarefa existe",
             Description = "Obter informação se uma tarefa existe através de seu número de identificação"
         )]
-        public async Task<bool> GetTaskExistsByIdAsync(int id)
+        public async Task<ActionResult<bool>> GetTaskExistsByIdAsync(int id)
         {
-            return await _tasksAppService.GetTaskExistsByIdAsync(id);
+            try
+            {
+                return CustomResponse(await _tasksAppService.GetTaskExistsByIdAsync(id));
+            }
+            catch (Exception ex)
+            {
+                return CustomResponse(ex);
+            }
         }
 
         /// <summary>
@@ -120,8 +196,56 @@ namespace TaskManager.WebApp.API.Controllers.V1
             {
                 PageNumber = taskFilter.PageNumber,
                 PageSize = taskFilter.PageSize,
+                DueDate = taskFilter.DueDate,
+                Status = taskFilter.Status,
                 Title = taskFilter.Title
             };
+        }
+
+        /// <summary>
+        /// Returns a custom ActionResult to the requester
+        /// </summary>
+        /// <param name="response">A response obejct</param>
+        /// <returns>Returns a custom ActionResult Status Code 
+        /// according with the "response" parameter data</returns>
+        private ActionResult CustomResponse(object? response)
+        {
+            if (response == null)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = TasksConstants.TaskOperationFailed
+                });
+            }
+
+            if (response is ModelStateDictionary modelStateDictionary)
+            {
+                var errors = modelStateDictionary.Values.SelectMany(v => v.Errors);
+
+                return BadRequest(new
+                {
+                    success = false,
+                    message = errors.Select(error => 
+                        error.Exception == null ? 
+                        error.ErrorMessage : error.Exception.Message)
+                });
+            }
+
+            if (response is Exception exception)
+            {
+                return BadRequest(new 
+                {
+                    success = false,
+                    message = exception.Message
+                });
+            }
+
+            return Ok(new
+            {
+                success = true,
+                data = response
+            });
         }
     }
 }

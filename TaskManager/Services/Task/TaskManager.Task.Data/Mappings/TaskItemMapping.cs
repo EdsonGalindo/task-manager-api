@@ -22,6 +22,7 @@ namespace TaskManager.Tasks.Data.Mappings
                 .IsRequired(false);
 
             builder.Property(t => t.Status)
+                .IsRequired()
                 .IsRequired();
         }
     }

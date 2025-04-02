@@ -1,5 +1,7 @@
-﻿using TaskManager.Core.DomainObjects;
+﻿using System;
+using TaskManager.Core.DomainObjects;
 using TaskManager.Core.Shared.WebApps.API;
+using static TaskManager.Core.Shared.Task.Domain.TaskStatus;
 
 namespace TaskManager.Core.Shared.Task.Filter
 {
@@ -13,6 +15,16 @@ namespace TaskManager.Core.Shared.Task.Filter
             : base(taskAppSettings.Pagination) { }
 
         public TaskFilterParameters() { }
+
+        /// <summary>
+        /// Filter tasks by Due Date
+        /// </summary>
+        public DateTime? DueDate { get; set; }
+
+        /// <summary>
+        /// Filter the tasks by Status
+        /// </summary>
+        public StatusEnum? Status { get; set; }
 
         /// <summary>
         /// Filter tasks by Title

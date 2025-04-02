@@ -86,6 +86,11 @@ namespace TaskManager.Tasks.Application.Services
         /// <inheritdoc/>
         public async Task<bool> UpdateTaskAsync(TaskItemViewModel task)
         {
+            if (task.Id == 0)
+            {
+                throw new Exception(TasksConstants.TaskItemInvalid);
+            }
+
             return await _tasksRepository.UpdateAsync(_mapper.Map<TaskItem>(task));
         }
     }

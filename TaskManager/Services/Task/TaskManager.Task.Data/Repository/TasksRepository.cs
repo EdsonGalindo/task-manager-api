@@ -45,8 +45,11 @@ namespace TaskManager.Tasks.Data.Repository
         public async Task<IEnumerable<TaskItem>> GetAllTasksAsync(TaskFilterParameters taskFilter)
         {
             var query = _taskContext.Tasks
-                .Where(t => string.IsNullOrEmpty(taskFilter.Title) || 
-                       t.Title.Contains(taskFilter.Title))
+                .Where(t =>
+                        (t.DueDate == (taskFilter.DueDate?? t.DueDate)) &&
+                        (t.Status == (taskFilter.Status?? t.Status)) &&
+                        (string.IsNullOrWhiteSpace(taskFilter.Title) || 
+                        t.Title.Contains(taskFilter.Title, StringComparison.InvariantCultureIgnoreCase)))
                 .AsQueryable();
 
             return await ToPagedList(query, taskFilter.PageNumber, taskFilter.PageSize);

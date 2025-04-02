@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TaskManager.WebApp.API.Configurations
 {
@@ -18,6 +19,11 @@ namespace TaskManager.WebApp.API.Configurations
             {
                 options.GroupNameFormat = "'v'VVV";
                 options.SubstituteApiVersionInUrl = true;
+            });
+
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
             });
 
             services.AddCors(options =>

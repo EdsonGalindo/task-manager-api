@@ -25,7 +25,7 @@ namespace TaskManager.Tasks.Domain
         public string Title { get; set; } = string.Empty;
         public string? Description { get; set; }
         public DateTime? DueDate { get; set; }
-        public StatusEnum Status { get; set; } = StatusEnum.Pending;
+        public StatusEnum? Status { get; set; } = StatusEnum.Pending;
 
         /// <summary>
         /// Marks the task as pending.
