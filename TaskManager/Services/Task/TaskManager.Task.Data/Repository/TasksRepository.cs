@@ -28,7 +28,7 @@ namespace TaskManager.Tasks.Data.Repository
             var task = await _taskContext.Tasks.FindAsync(id);
             if (task == null)
             {
-                throw new Exception(TasksConstants.TaskItemNotFound);
+                throw new ArgumentException(TasksConstants.TaskItemNotFound);
             }
 
             _taskContext.Tasks.Remove(task);

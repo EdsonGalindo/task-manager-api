@@ -23,12 +23,9 @@ namespace TaskManager.Tasks.Application
         private TaskItemViewModel _taskItem;
         private DbContextOptions<TasksContext> _tasksDbContextOptions;
         private readonly IMapper _mapper;
-        private TasksAppServiceFixture _tasksAppServiceFixture;
 
         public TasksAppServiceUpdateTests(TasksAppServiceFixture tasksAppServiceFixture)
         {
-            _tasksAppServiceFixture = tasksAppServiceFixture;
-
             #region Set the App Service and its dependencies
             var tasksDbContext = new TasksContext(tasksAppServiceFixture.DbContextOptions);
             var tasksRepository = new TasksRepository(tasksDbContext);

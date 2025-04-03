@@ -15,10 +15,12 @@ namespace TaskManager.Tasks.Application.Tests.Fixtures
         public DbContextOptions<TasksContext> DbContextOptions { get; }
         public TaskItemViewModel ExistentTaskItem { get; set; }
 
-        private const string DatabaseName = "TaskManager";
+        private string DatabaseName = "TaskManager";
 
         public TasksAppServiceFixture()
         {
+            DatabaseName += Random.Shared.Next();
+
             var services = new ServiceCollection();
 
             services.AddScoped<ITasksRepository, TasksRepository>();
@@ -33,11 +35,6 @@ namespace TaskManager.Tasks.Application.Tests.Fixtures
             DbContextOptions = new DbContextOptionsBuilder<TasksContext>()
                 .UseInMemoryDatabase(databaseName: DatabaseName)
                 .Options;
-
-            /*services.AddDbContext<TasksContext>(options =>
-            {
-                options.UseInMemoryDatabase(DatabaseName);
-            });*/
 
             ServiceProvider = services.BuildServiceProvider();
         }
