@@ -1,14 +1,17 @@
+using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using TaskManager.Core.Shared.Tasks.Constants;
 using TaskManager.Tasks.Application.Services;
 using TaskManager.Tasks.Application.Tests.Fixtures;
 using TaskManager.Tasks.Application.ViewModels;
+using TaskManager.Tasks.Data.Repository;
+using TaskManager.Tasks.Data;
 using TaskManager.Tasks.Domain;
 using static TaskManager.Core.Shared.Task.Domain.TaskStatus;
 
 namespace TaskManager.Tasks.Application
 {
-    public class TasksAppServiceAddAsyncTests : IClassFixture<TasksAppServiceFixture>
+    public class TasksAppServiceAddTests : IClassFixture<TasksAppServiceFixture>
     {
         private readonly ITasksAppservice _tasksAppService;
         private string? _taskTitle;
@@ -16,10 +19,16 @@ namespace TaskManager.Tasks.Application
         private DateTime? _taskDueDate;
         private StatusEnum? _taskStatus;
 
-        public TasksAppServiceAddAsyncTests(TasksAppServiceFixture tasksAppServiceFixture)
+        public TasksAppServiceAddTests(TasksAppServiceFixture tasksAppServiceFixture)
         {
-            _tasksAppService = tasksAppServiceFixture
-                .ServiceProvider.GetRequiredService<ITasksAppservice>();
+            #region Set the App Service and its dependencies
+            var tasksDbContext = new TasksContext(tasksAppServiceFixture.DbContextOptions);
+            var tasksRepository = new TasksRepository(tasksDbContext);
+
+            _tasksAppService = new TasksAppService(tasksRepository,
+                tasksAppServiceFixture.ServiceProvider.GetRequiredService<IMapper>());
+            #endregion
+
             _taskTitle = "Test task";
             _taskDescription = string.Empty;
             _taskDueDate = null;

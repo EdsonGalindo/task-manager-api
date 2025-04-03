@@ -114,7 +114,9 @@ namespace TaskManager.Tasks.Application.Services
         {
             if (id == 0)
             {
-                throw new Exception(TasksConstants.TaskItemInvalid);
+                throw new ArgumentException(
+                    TasksConstants.TaskItemInvalid,
+                    nameof(TaskItemViewModel.Id));
             }
         }
 
