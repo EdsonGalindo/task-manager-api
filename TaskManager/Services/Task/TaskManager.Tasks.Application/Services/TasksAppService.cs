@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using System.Threading.Tasks;
 using TaskManager.Core.Shared.Tasks.Constants;
 using TaskManager.Core.Shared.Tasks.Filter;
 using TaskManager.Tasks.Application.ViewModels;
