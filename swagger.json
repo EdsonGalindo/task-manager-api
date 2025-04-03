@@ -1,0 +1,359 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API - Task Manager - 1.0",
+    "description": "API para gerencimento de tarefas",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/taskmanager/tasks": {
+      "post": {
+        "tags": [
+          "TaskManager"
+        ],
+        "summary": "Adicionar uma nova Tarefa",
+        "description": "Adicionar uma nova Tarefa ao sistema",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/TaskItemViewModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "TaskManager"
+        ],
+        "summary": "Atualizar uma Tarefa",
+        "description": "Atualizar uma Tarefa existente no sistema",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/TaskItemViewModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "TaskManager"
+        ],
+        "summary": "Obter todas tarefas",
+        "description": "Obter todas as Tarefas com filtro por título (opcional) e paginação dos resultados",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "DueDate",
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "in": "query",
+            "name": "Status"
+          },
+          {
+            "in": "query",
+            "name": "Title",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "PageNumber",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "PageSize",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TaskItemViewModel"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/taskmanager/tasks/{id}": {
+      "delete": {
+        "tags": [
+          "TaskManager"
+        ],
+        "summary": "Excluir uma Tarefa",
+        "description": "Excluir uma Tarefa existente no sistema",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "TaskManager"
+        ],
+        "summary": "Obter uma tarefa",
+        "description": "Obter uma Tarefa através de seu número de identificação",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TaskItemViewModel"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/taskmanager/tasks/{id}/set-pending": {
+      "put": {
+        "tags": [
+          "TaskManager"
+        ],
+        "summary": "Definir o Status de uma Tarefa como \"Pendente\"",
+        "description": "Definir o Status de uma Tarefa existente no sistema como \"Pendente\"",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/taskmanager/tasks/{id}/start": {
+      "put": {
+        "tags": [
+          "TaskManager"
+        ],
+        "summary": "Definir o Status de uma Tarefa como \"Em Progresso\"",
+        "description": "Definir o Status de uma Tarefa existente no sistema como \"Em Progresso\"",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/taskmanager/tasks/{id}/complete": {
+      "put": {
+        "tags": [
+          "TaskManager"
+        ],
+        "summary": "Definir o Status de uma Tarefa como \"Concluída\"",
+        "description": "Definir o Status de uma Tarefa existente no sistema como \"Concluída\"",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/taskmanager/tasks/{id}/exists": {
+      "get": {
+        "tags": [
+          "TaskManager"
+        ],
+        "summary": "Obter informação se uma tarefa existe",
+        "description": "Obter informação se uma tarefa existe através de seu número de identificação",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "StatusEnum": {
+      "format": "int32",
+      "enum": [
+        1,
+        2,
+        3
+      ],
+      "type": "integer"
+    },
+    "TaskItemViewModel": {
+      "required": [
+        "status",
+        "title"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "maxLength": 100,
+          "minLength": 3,
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 500,
+          "minLength": 0,
+          "type": "string"
+        },
+        "dueDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/StatusEnum"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
