@@ -28,6 +28,7 @@ namespace TaskManager.Tasks.Application.Services
         /// <inheritdoc/>
         public async Task<bool> DeleteTaskAsync(int id)
         {
+            ValidateTaskId(id);
             return await _tasksRepository.DeleteAsync(id);
         }
 
@@ -43,7 +44,14 @@ namespace TaskManager.Tasks.Application.Services
         public async Task<TaskItemViewModel?> GetTaskByIdAsync(int id)
         {
             ValidateTaskId(id);
-            return _mapper.Map<TaskItemViewModel?>(await _tasksRepository.GetByIdAsync(id));
+            
+            var task = await _tasksRepository.GetByIdAsync(id);
+            if (task == null)
+            {
+                throw new Exception(TasksConstants.TaskItemNotFound);
+            }
+
+            return _mapper.Map<TaskItemViewModel?>(task);
         }
 
         /// <inheritdoc/>

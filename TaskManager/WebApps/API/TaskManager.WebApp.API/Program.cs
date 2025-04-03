@@ -1,22 +1,25 @@
 using TaskManager.WebApp.API.Configurations;
 
+#region Services Configurations
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+#region Application configurations
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.SetSwaggerConfig();
-
-#region Task Manager Configurations
-builder.Services.SetWebApiConfig();
 builder.Services.ResolveDependencies();
-builder.Services.AddTaskAppSettings(builder.Configuration);
-builder.Services.AddTasksInMemoryDbContext(builder.Configuration);
+builder.Services.SetWebApiConfig();
 builder.Services.AddAutoMapperProfiles();
+builder.Services.AddApplicationLogging();
 #endregion
 
+#region Task Manager Configurations
+builder.Services.AddTaskAppSettings(builder.Configuration);
+builder.Services.AddTasksInMemoryDbContext(builder.Configuration);
+#endregion
+#endregion
+
+#region Application Configurations
 var app = builder.Build();
 
 app.UseSwaggerConfig();
@@ -28,3 +31,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+#endregion
