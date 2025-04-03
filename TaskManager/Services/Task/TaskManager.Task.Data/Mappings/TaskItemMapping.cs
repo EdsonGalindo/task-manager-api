@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TaskManager.Core.Shared.Task.Constants;
 using TaskManager.Tasks.Domain;
 
 namespace TaskManager.Tasks.Data.Mappings
@@ -12,11 +13,11 @@ namespace TaskManager.Tasks.Data.Mappings
 
             builder.Property(t => t.Title)
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(TasksConstants.TaskTitleMaxLength);
 
             builder.Property(t => t.Description)
                 .IsRequired(false)
-                .HasMaxLength(500);
+                .HasMaxLength(TasksConstants.TaskDescriptionMaxLength);
 
             builder.Property(t => t.DueDate)
                 .IsRequired(false);
