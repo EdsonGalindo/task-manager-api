@@ -1,4 +1,4 @@
-﻿namespace TaskManager.Core.Shared.Task.Constants
+﻿namespace TaskManager.Core.Shared.Tasks.Constants
 {
     public static class TasksConstants
     {

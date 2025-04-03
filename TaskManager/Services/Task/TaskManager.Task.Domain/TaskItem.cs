@@ -1,5 +1,5 @@
 ﻿using TaskManager.Core.DomainObjects;
-using TaskManager.Core.Shared.Task.Constants;
+using TaskManager.Core.Shared.Tasks.Constants;
 using static TaskManager.Core.Shared.Task.Domain.TaskStatus;
 
 namespace TaskManager.Tasks.Domain

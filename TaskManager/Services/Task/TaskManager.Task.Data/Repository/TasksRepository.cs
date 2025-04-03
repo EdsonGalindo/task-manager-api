@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TaskManager.Core.Shared.Task.Constants;
-using TaskManager.Core.Shared.Task.Filter;
+using TaskManager.Core.Shared.Tasks.Constants;
+using TaskManager.Core.Shared.Tasks.Filter;
 using TaskManager.Tasks.Domain;
 
 namespace TaskManager.Tasks.Data.Repository

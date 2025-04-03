@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TaskManager.Core.Shared.Task.Constants;
+using TaskManager.Core.Shared.Tasks.Constants;
 using TaskManager.Tasks.Domain;
 
 namespace TaskManager.Tasks.Data.Mappings

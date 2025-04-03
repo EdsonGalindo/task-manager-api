@@ -1,4 +1,4 @@
-﻿using TaskManager.Core.Shared.Task.Filter;
+﻿using TaskManager.Core.Shared.Tasks.Filter;
 using TaskManager.Tasks.Application.ViewModels;
 
 namespace TaskManager.Tasks.Application.Services

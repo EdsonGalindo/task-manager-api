@@ -4,7 +4,7 @@ using TaskManager.Core.DomainObjects;
 using TaskManager.Core.Shared.WebApps.API;
 using static TaskManager.Core.Shared.Task.Domain.TaskStatus;
 
-namespace TaskManager.Core.Shared.Task.Filter
+namespace TaskManager.Core.Shared.Tasks.Filter
 {
     /// <summary>
     /// Parameters for filtering get Tasks results and limiting 

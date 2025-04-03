@@ -1,4 +1,4 @@
-﻿using TaskManager.Core.Shared.Task.Filter;
+﻿using TaskManager.Core.Shared.Tasks.Filter;
 
 namespace TaskManager.Tasks.Domain
 {
